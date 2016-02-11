@@ -1,7 +1,7 @@
 ---
   - name: install nfs and rpcbind
     sudo: yes
-    yum: name={{ items }} state=present
+    yum: name={{ item }} state=present
     with_items: 
       - nfs-utils
       - rpcbind
@@ -10,4 +10,8 @@
 
   - name: open port on firewalld 
     sudo: yes
-    firewalld: permanent=yes  service=nfs  state=accept 
+    firewalld: 
+      permanent: yes
+      service: nfs
+      state: enabled 
+      zone: public

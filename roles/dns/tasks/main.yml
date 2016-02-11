@@ -70,6 +70,14 @@
       owner: root
       group: named
 
+  - name: open port for DNS on firewalld 
+    sudo: yes
+    firewalld: 
+      permanent: yes
+      service: named
+      state: enabled 
+      zone: public
+
   - name: Restore SELinux context on named.conf
     shell: "restorecon -Rv /etc/named.conf"
     notify: restart named
