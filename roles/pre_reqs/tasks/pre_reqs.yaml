@@ -1,5 +1,5 @@
 ---
- - name: Install base packages. 
+  - name: Install base packages. 
     sudo: yes
     yum: name={{ items }}  state=present 
     when:  variable is defined
