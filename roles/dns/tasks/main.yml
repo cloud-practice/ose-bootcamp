@@ -1,0 +1,75 @@
+---
+  - name: Capture guid
+    shell: "hostname|cut -f2 -d-|cut -f1 -d."
+    register: guid
+
+  - name: Set guid paramater
+    set_fact:
+      guid: "{{ guid.stdout }}"
+
+  - debug: msg="GUID for environment is {{ guid }}"
+  
+  - name: Install bind rpms
+    yum: name={{ item }} state=latest
+    with_items:
+      - bind
+      - bind-utils
+    notify: enable named
+
+  - name: Get IP Infra00 IP
+    shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
+    register: infranode00ip
+
+  - name: Set infra0 paramater
+    set_fact:
+      infra0: "{{ infranode00ip.stdout }}"
+
+  - debug: msg="infranode00 IP is {{ infranode00ip.stdout }}"
+
+  - name: Get IP Infra01 IP
+    shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
+    register: infranode01ip
+
+  - debug: msg="infranode01 IP is {{ infranode01ip.stdout }}"
+
+  - name: set infra1 paramater
+    set_fact:
+      infra1: "{{ infranode01ip.stdout }}"
+
+  - name: Get domain 
+    shell: "echo cloudapps-{{ guid }}.oslab.opentlc.com"
+    register: domain
+
+  - name: set domain paramater
+    set_fact:
+      domain: "{{ domain.stdout }}"
+
+  - debug: msg="Domain for environment is {{ domain }}"
+
+  - name: Create zone directory
+    file:
+      state: directory
+      path: /var/named/zones/
+      owner: named
+      group: named
+
+  - name: Configure zone file
+    template: 
+      src: domain.db.j2
+      dest: /var/named/zones/{{ domain }}.db
+      owner: named
+      group: named
+
+  - name: Restore SELinux context on zone file and dir
+    shell: "restorecon -Rv /var/named/zones/"
+
+  - name: Configure named.conf
+    template:
+      src: named.conf.j2
+      dest: /etc/named.conf
+      owner: root
+      group: named
+
+  - name: Restore SELinux context on named.conf
+    shell: "restorecon -Rv /etc/named.conf"
+    notify: restart named

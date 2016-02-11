@@ -1,0 +1,5 @@
+ ---
+  - include: roles/pre_reqs/pre-requisites.yaml
+  - include: roles/dns/dns.yaml
+  - include: roles/docker/docker.yaml
+  - include: roles/nfs/nfs.yaml

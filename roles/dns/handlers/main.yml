@@ -1,0 +1,10 @@
+---
+  - name: enable named
+    service:
+      name: named
+      state: enabled
+
+  - name: restart named
+    service:
+      name: named
+      state: restarted

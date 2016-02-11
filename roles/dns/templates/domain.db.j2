@@ -1,0 +1,15 @@
+$ORIGIN  .
+$TTL 1  ;  1 seconds (for testing only)
+{{ domain }} IN SOA master.{{ domain }}.  root.{{ domain }}.  (
+  2011112904  ;  serial
+  60  ;  refresh (1 minute)
+  15  ;  retry (15 seconds)
+  1800  ;  expire (30 minutes)
+  10  ; minimum (10 seconds)
+)
+  NS master.{{ domain }}.
+$ORIGIN {{ domain }}.
+test A {{ infra0 }}
+test A {{ infra1 }}
+* A {{ infra0 }}
+* A {{ infra1 }}
