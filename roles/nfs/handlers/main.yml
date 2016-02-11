@@ -2,16 +2,30 @@
 # handlers file for ose-bootcamp
   - name: enable nfs
     sudo: yes
-    service: enabled=yes name=nfs-server
+    service: 
+      enabled: yes 
+      name: nfs-server
 
   - name: enable rpcbind
     sudo: yes
-    service: enabled=yes name=rpcbind
+    service:
+      enabled: yes 
+      name: rpcbind
+
+  - name: restart rpcbind
+    sudo: yes
+    service: 
+      name: rpcbind 
+      state: restarted
 
   - name: restart nfs-server
     sudo: yes
-    service: name=nfs-server state=restarted
+    service: 
+      name: nfs-server 
+      state: restarted
 
-  - name: restart rpcbind
-    sudo: 
-    service: name=rpcbind state=restarted
+  - name: reload firewalld
+    sudo: yes
+    shell: "firewall-cmd --reload"
+    ignore_errors: yes
+

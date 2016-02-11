@@ -1,3 +1,7 @@
+Assumptions:
+* The host running this playbook from is already subscribed and has ansible installed
+* The hosts file will only be used to configure pre-requisites, NOT for the OpenShift install
+
 Setup the */etc/ansible/hosts* file (or use a custom file and point to it as the inventory file) with the following host groups (change the GUID value to match your environment):
 
 ----

@@ -7,11 +7,49 @@
       - rpcbind
     notify: enable nfs
     notify: enable rpcbind
+    tags:
+      - nfs
 
-  - name: open port on firewalld 
+  - name: open nfs port on firewalld 
     sudo: yes
     firewalld: 
       permanent: yes
       service: nfs
       state: enabled 
       zone: public
+    notify: reload firewalld
+    tags:
+      - nfs
+
+  - name: open UDP rpcbind port on firewalld 
+    sudo: yes
+    firewalld: 
+      permanent: yes
+      port: 111/udp
+      state: enabled 
+      zone: public
+    notify: reload firewalld
+    tags:
+      - nfs
+
+  - name: open TCP rpcbind port on firewalld 
+    sudo: yes
+    firewalld: 
+      permanent: yes
+      port: 111/tcp
+      state: enabled 
+      zone: public
+    notify: reload firewalld
+    tags:
+      - nfs
+
+  - name: open mountd port on firewalld 
+    sudo: yes
+    firewalld: 
+      permanent: yes
+      service: mountd
+      state: enabled 
+      zone: public
+    notify: reload firewalld
+    tags:
+      - nfs
