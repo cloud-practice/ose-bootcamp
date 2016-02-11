@@ -1,0 +1,15 @@
+---
+ - name: rhn | register to rhn
+    command: /usr/bin/subscription-manager register --username={{ rhn_user }} --password={{ rhn_password }}
+    tags:
+      - rhn
+
+  - name: rhn | Auto-attach to RHN Pool.
+    shell: /usr/bin/subscription-manager attach --auto
+    tags:
+      - rhn
+
+  - name: rhn | configure red hat repos
+    command: subscription-manager repos --disable "*" --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms
+    tags:
+      - rhn

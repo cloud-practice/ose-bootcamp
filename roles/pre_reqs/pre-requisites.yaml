@@ -1,0 +1,10 @@
+---
+- hosts: all
+  remote_user: root
+  vars:
+    - include: vars/main.yml
+  tasks:
+    - include: tasks/register_rhn.yaml
+    - include: tasks/pre_reqs.yaml
+  handlers:
+    - include: handlers/main.yml
