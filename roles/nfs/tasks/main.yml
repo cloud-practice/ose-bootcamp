@@ -1,2 +1,4 @@
 ---
 # tasks file for ose-bootcamp
+  - include: nfs_install.yml
+  - include: configure_nfs.yml
