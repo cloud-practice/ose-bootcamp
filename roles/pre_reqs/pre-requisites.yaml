@@ -8,3 +8,8 @@
     - include: tasks/pre_reqs.yaml
   handlers:
     - include: handlers/main.yml
+
+- hosts: ose
+  remote_user: root
+  tasks:
+    - include: tasks/openshift.yaml

@@ -1,0 +1,3 @@
+  - name: Install OpenShift utilities. 
+    sudo: yes
+    yum: name=atomic-openshift-utils  state=present

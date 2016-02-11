@@ -13,10 +13,6 @@
       - bash-completion
       - screen
 
-  - name: Install OpenShift utilities. 
-    sudo: yes
-    yum: name=atomic-openshift-utils  state=present
-
   - name: Update all packages.
     sudo: yes
     yum: name=*  state=latest
