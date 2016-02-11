@@ -1,0 +1,10 @@
+---
+  - name: create export directory
+    sudo: yes
+    file: path=/opt/nfs/registry state=directory owner=nfsnobody:nfsnobody mode=0755
+
+  - name: adding export to nfs 
+    sudo: yes
+    lineinfile: dest=/etc/exports state=present  line="/opt/nfs/registry  *(root_squash,rw,sync)" 
+    notify: restart nfs-server
+    notify: restart rcpbind
