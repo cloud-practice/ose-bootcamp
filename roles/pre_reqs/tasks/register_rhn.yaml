@@ -1,18 +1,23 @@
 ---
+  - name: rhn | Check subscription status
+    shell: "/usr/bin/subscription-manager status"
+    ignore_errors: yes
+    register: is_registered
+
   - name: rhn | register to rhn
     shell: "/usr/bin/subscription-manager register --username={{ rhn_user }} --password={{ rhn_password }}"
-    ignore_errors: yes
+    when: is_registered.rc != 0
     tags:
       - rhn
 
   - name: rhn | Auto-attach to RHN Pool.
     shell: "/usr/bin/subscription-manager attach --auto"
-    ignore_errors: yes
+    when: is_registered.rc != 0
     tags:
       - rhn
 
   - name: rhn | configure red hat repos
     shell: "subscription-manager repos --disable * --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms"
-    ignore_errors: yes
+    when: is_registered.rc != 0
     tags:
       - rhn
