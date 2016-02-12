@@ -1,5 +1,25 @@
 ---
-  - include: roles/pre_reqs/pre-requisites.yaml
-  - include: roles/dns/dns.yaml
-  - include: roles/nfs/nfs.yaml
-  - include: roles/docker/docker.yaml
+- name: Prerequisites
+  hosts: all
+  remote_user: root
+  roles:
+    - pre_reqs
+
+- name: DNS
+  hosts: oselab
+  remote_user: root
+  roles:
+    - dns
+
+- name: NFS
+  hosts: nfs
+  remote_user: root
+  roles:
+    - nfs
+
+- name: docker
+  hosts: ose
+  remote_user: root
+  roles:
+    - docker
+

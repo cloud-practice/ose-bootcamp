@@ -1,16 +1,15 @@
 ---
 # tasks file for ose-bootcamp
-  - name: docker | Install docker
-    sudo: yes
-    yum: name={{ item }} state=present
-    with_items: 
-      - docker
+  - name: Install docker
+    yum:
+      name: docker
+      state: present
     notify: enable docker
     tags:
       - docker
 
-  - name: docker | Configure docker
-    lineinfile: 
+  - name: Configure docker
+    lineinfile:
       regexp: '^OPTIONS=*'
       line: "^OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16'"
       dest: /etc/sysconfig/docker
@@ -18,23 +17,24 @@
     tags:
       - docker
 
-  - name: docker | Check for docker-storage-setup
+  - name: Check for docker-storage-setup
     shell: 'lvs | grep docker'
     register: is_docker_storage_setup
+    changed_when: no
     ignore_errors: yes
     tags:
       - docker
 
-  - name: docker | Configure docker-storage-setup
-    template: 
-      src: docker-storage-setup.j2
+  - name: Configure docker-storage-setup
+    copy:
+      src: docker-storage-setup
       dest: /etc/sysconfig/docker-storage-setup
     when: is_docker_storage_setup.rc != 0
     tags:
       - docker
 
-  - name: docker | Run docker-storage-setup
-    shell: 'docker-storage-setup'
+  - name: Run docker-storage-setup
+    command: 'docker-storage-setup'
     when: is_docker_storage_setup.rc != 0
     tags:
       - docker

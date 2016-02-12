@@ -1,2 +1,11 @@
 ---
 # tasks file for ose-bootcamp
+- include: register_rhn.yaml
+- include: pre_reqs.yaml
+
+- name: Install OpenShift utilities.
+  become: yes
+  yum:
+    name: atomic-openshift-utils
+    state: present
+  when: "'ose' in group_names"

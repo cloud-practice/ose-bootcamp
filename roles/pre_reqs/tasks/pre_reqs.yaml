@@ -1,18 +1,20 @@
 ---
-  - name: Install base packages. 
-    sudo: yes
-    yum: name={{ items }}  state=present 
+  - name: Install base packages.
+    become: yes
+    yum:
+      name: "{{ items }}"
+      state: latest
     when:  variable is defined
     with_items:
-      - wget 
+      - wget
       - git
       - net-tools
       - bind-utils
-      - iptables-services 
+      - iptables-services
       - bridge-utils
       - bash-completion
       - screen
 
   - name: Update all packages.
-    sudo: yes
+    become: yes
     yum: name=*  state=latest

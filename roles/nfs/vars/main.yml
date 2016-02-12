@@ -1,2 +1,22 @@
 ---
 # vars file for ose-bootcamp
+firwalld_rules:
+  - permanent: yes
+    service: nfs
+    state: enabled
+    zone: public
+
+  - permanent: yes
+    port: 111/udp
+    state: enabled
+    zone: public
+
+  - permanent: yes
+    port: 111/tcp
+    state: enabled
+    zone: public
+
+  - permanent: yes
+    service: mountd
+    state: enabled
+    zone: public
