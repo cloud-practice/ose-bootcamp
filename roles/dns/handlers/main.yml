@@ -2,7 +2,7 @@
   - name: enable named
     service:
       name: named
-      state: enabled
+      enabled: yes
 
   - name: restart named
     service:

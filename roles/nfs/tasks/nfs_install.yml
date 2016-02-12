@@ -1,55 +1,23 @@
 ---
   - name: install nfs and rpcbind
-    sudo: yes
-    yum: name={{ item }} state=present
-    with_items: 
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
       - nfs-utils
       - rpcbind
     notify: enable nfs
-    notify: enable rpcbind
     tags:
       - nfs
 
-  - name: open nfs port on firewalld 
-    sudo: yes
-    firewalld: 
-      permanent: yes
-      service: nfs
-      state: enabled 
-      zone: public
-    notify: reload firewalld
-    tags:
-      - nfs
-
-  - name: open UDP rpcbind port on firewalld 
-    sudo: yes
-    firewalld: 
-      permanent: yes
-      port: 111/udp
-      state: enabled 
-      zone: public
-    notify: reload firewalld
-    tags:
-      - nfs
-
-  - name: open TCP rpcbind port on firewalld 
-    sudo: yes
-    firewalld: 
-      permanent: yes
-      port: 111/tcp
-      state: enabled 
-      zone: public
-    notify: reload firewalld
-    tags:
-      - nfs
-
-  - name: open mountd port on firewalld 
-    sudo: yes
-    firewalld: 
-      permanent: yes
-      service: mountd
-      state: enabled 
-      zone: public
+  - name: open nfs port on firewalld
+    firewalld:
+      permanent: "{{ item.permanent }}"
+      service: "{{ item.service | default(omit) }}"
+      state: "{{ item.state }}"
+      zone: "{{ item.zone }}"
+      port: "{{ item.port | default(omit) }}"
+    with_items: firewalld_rules
     notify: reload firewalld
     tags:
       - nfs
