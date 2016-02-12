@@ -1,0 +1,9 @@
+---
+- hosts: ose
+  remote_user: root
+  vars:
+    - include: vars/main.yml
+  tasks:
+    - include: tasks/main.yml
+  handlers:
+    - include: handlers/main.yml

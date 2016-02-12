@@ -1,2 +1,12 @@
 ---
 # handlers file for ose-bootcamp
+  - name: enable docker
+    service:
+      name: docker
+      state: enabled
+
+  - name: restart docker
+    service:
+      name: docker
+      state: restarted
+
