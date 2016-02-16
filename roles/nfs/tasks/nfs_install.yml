@@ -6,7 +6,9 @@
     with_items:
       - nfs-utils
       - rpcbind
-    notify: enable nfs
+    notify: 
+      - enable rpcbind
+      - enable nfs-server
     tags:
       - nfs
 

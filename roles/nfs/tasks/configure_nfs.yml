@@ -13,4 +13,6 @@
       dest: /etc/exports
       state: present
       line: "/opt/nfs/registry  *(root_squash,rw,sync)"
-    notify: restart nfs-server
+    notify: 
+      - restart rpcbind
+      - restart nfs-server
