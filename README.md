@@ -13,6 +13,14 @@ This playbook prepares systems in the bootcamp lab to be installed with OpenShif
 
 # Setup
 
+Setup Ansible:
+```bash
+subscription-manager register
+subscription-manager attach --auto
+subscription-manager repos --disable=* --enable=rhel-7-server-rpms --enable=rhel-7-server-ose-3.1-rpms
+yum -y install ansible
+```
+
 Setup the */etc/ansible/hosts* file (or use a custom file and point to it as the inventory file) with the following host groups (change the GUID value to match your environment):
 
 ```bash

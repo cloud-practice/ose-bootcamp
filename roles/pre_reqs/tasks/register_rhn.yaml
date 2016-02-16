@@ -18,7 +18,7 @@
       - rhn
 
   - name: rhn | configure red hat repos
-    command: "subscription-manager repos --disable * --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms"
+    command: "/usr/bin/subscription-manager repos --disable * --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms"
     when: is_registered.rc != 0
     tags:
       - rhn

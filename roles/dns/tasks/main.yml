@@ -19,13 +19,21 @@
       - bind-utils
     notify: enable named
 
+  - name: Get IP Infra00 external IP
+    shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
+    register: infranode00ip
+
   - name: Set infra0 paramater
     set_fact:
-      infra0: "{{ hostvars['infranode00-' + guid + '.oslab.opentlc.com']['ansible_default_ipv4.address'] }}"
+      infra0: "{{ infranode00ip.stdout }}"
+
+  - name: Get IP Infra01 external IP
+    shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
+    register: infranode01ip
 
   - name: set infra1 paramater
     set_fact:
-      infra1: "{{ hostvars['infranode01-' + guid + '.oslab.opentlc.com']['ansible_default_ipv4.address'] }}"
+      infra1: "{{ infranode01ip.stdout }}"
 
   - name: set domain paramater
     set_fact:

@@ -1,6 +1,6 @@
 ---
 # vars file for ose-bootcamp
-firwalld_rules:
+firewalld_rules:
   - permanent: yes
     service: nfs
     state: enabled
