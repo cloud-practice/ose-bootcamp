@@ -21,7 +21,7 @@ subscription-manager repos --disable=* --enable=rhel-7-server-rpms --enable=rhel
 yum -y install ansible
 ```
 
-Setup the */etc/ansible/hosts* file (or use a custom file and point to it as the inventory file) with the following host groups (change the GUID value to match your environment):
+Setup the */etc/ansible/hosts* file (or use a custom file and point to it as the inventory file with *--inventory=*) with the following host groups (change the GUID value to match your environment):
 
 ```bash
 [oselab]
@@ -46,11 +46,11 @@ nfs
 Set the variables for subscription-manager in *roles/pre_reqs/vars/main.yml* for *rhn_user* and *rhn_password* and call the *setup_environment.yaml* playbook:
 
 ```bash
-ansible-playbook --forks=10 setup_environment.yaml"
+ansible-playbook setup_environment.yaml"
 ```
 
-Or call the playbook and specify the variables on the CLI:
+Or call the playbook and specify the variables on the CLI (you may need to use single quotes if your password has characters that need to be escaped:
 
 ```bash
-ansible-playbook --forks=10 setup_environment.yaml --extra-vars="rhn_user=my.user rhn_password=my.password"
+ansible-playbook setup_environment.yaml --extra-vars="rhn_user=my.user rhn_password=my.password"
 ```
