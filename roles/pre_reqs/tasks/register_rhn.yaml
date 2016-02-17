@@ -8,12 +8,14 @@
   - name: rhn | register to rhn
     command: "/usr/bin/subscription-manager register --username={{ rhn_user }} --password={{ rhn_password }}"
     when: is_registered.rc != 0
+    serial: "50%"
     tags:
       - rhn
 
   - name: rhn | Auto-attach to RHN Pool.
     command: "/usr/bin/subscription-manager attach --auto"
     when: is_registered.rc != 0
+    serial: "50%"
     tags:
       - rhn
 

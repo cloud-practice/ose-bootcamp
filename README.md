@@ -55,3 +55,7 @@ Or call the playbook and specify the variables on the CLI (you may need to use s
 ```bash
 ansible-playbook setup_environment.yaml --extra-vars="rhn_user=my.user rhn_password=my.password"
 ```
+The default tasks executed on hosts at a time is *5*, so it is recommended to set that to something higher, particularly for long running tasks like system updates.
+```bash
+ansible-playbook --forks=10 setup_environment.yaml --extra-vars="rhn_user=my.user rhn_password=my.password"
+```
