@@ -8,3 +8,8 @@
     service:
       name: named
       state: restarted
+
+  - name: reload firewalld
+    sudo: yes
+    shell: "/usr/bin/firewall-cmd --reload"
+    ignore_errors: yes

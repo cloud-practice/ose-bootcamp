@@ -73,6 +73,7 @@
       service: dns
       state: enabled
       zone: public
+    notify: reload firewalld
 
 #TODO: add idempotence here
   - name: Restore SELinux context on named.conf
