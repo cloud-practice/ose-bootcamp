@@ -19,6 +19,7 @@ subscription-manager register
 subscription-manager attach --auto
 subscription-manager repos --disable=* --enable=rhel-7-server-rpms --enable=rhel-7-server-ose-3.1-rpms
 yum -y install ansible
+git clone git@github.com:cloud-practice/ose-bootcamp.git /root/ose-bootcamp
 ```
 
 Setup the */etc/ansible/hosts* file (or use a custom file and point to it as the inventory file with *--inventory=*) with the following host groups (change the GUID value to match your environment):
