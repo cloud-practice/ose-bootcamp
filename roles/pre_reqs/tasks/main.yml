@@ -8,4 +8,4 @@
   yum:
     name: atomic-openshift-utils
     state: present
-  when: "'ose' in group_names" or "'oselab' in group_names"
+  when: "'ose' in group_names or 'oselab' in group_names"
