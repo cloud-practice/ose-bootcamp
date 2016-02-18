@@ -6,7 +6,7 @@
     register: is_registered
 
   - name: rhn | register to rhn
-    command: "/usr/bin/subscription-manager register --username={{ rhn_user }} --password={{ rhn_password }}"
+    command: "/usr/bin/subscription-manager register --username={{ rhn_username }} --password={{ rhn_password }}"
     when: is_registered.rc != 0
     tags:
       - rhn
