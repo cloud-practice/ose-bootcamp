@@ -1,14 +1,11 @@
 ---
-  - name: Capture guid
+  - name: Capture guid for OpenTLC
     shell: "hostname|cut -f2 -d-|cut -f1 -d."
     register: guid
 
-  - name: Set guid paramater
+  - name: Set guid paramater for OpenTLC
     set_fact:
       guid: "{{ guid.stdout }}"
-
-  - debug:
-      msg: "GUID for environment is {{ guid }}"
 
   - name: Install bind rpms
     yum:
@@ -19,7 +16,7 @@
       - bind-utils
     notify: enable named
 
-  - name: Get IP Infra00 external IP
+  - name: Get infra00 external IP
     shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
     register: infranode00ip
 
@@ -27,7 +24,7 @@
     set_fact:
       infra0: "{{ infranode00ip.stdout }}"
 
-  - name: Get IP Infra01 external IP
+  - name: Get infra01 external IP
     shell: "host infranode00-{{ guid }}.oslab.opentlc.com  ipa.opentlc.com |grep infranode | awk '{print $4}'"
     register: infranode01ip
 
@@ -38,9 +35,6 @@
   - name: set domain paramater
     set_fact:
       domain: "cloudapps-{{ guid }}.oslab.opentlc.com"
-
-  - debug:
-      msg: "Domain for environment is {{ domain }}"
 
   - name: Create zone directory
     file:
@@ -56,7 +50,8 @@
       owner: named
       group: named
 
-  - name: Restore SELinux context on zone file and dir
+#TODO: add idempotence here
+  - name: Restore SELinux context on zone file and directory
     shell: "restorecon -Rv /var/named/zones/"
 
   - name: Configure named.conf
@@ -66,7 +61,7 @@
       owner: root
       group: named
 
-  - name: open port for DNS on firewalld
+  - name: open ports for DNS on firewalld
     sudo: yes
     firewalld:
       permanent: yes

@@ -1,5 +1,5 @@
 ---
-  - name: rhn | Checking subscription status (a failure means it is not registered and will be)
+  - name: Checking subscription status (a failure means it is not registered and will be)
     command: "/usr/bin/subscription-manager status"
     ignore_errors: yes
     changed_when: no
@@ -10,19 +10,19 @@
           or (rhn_password is undefined or rhn_password is none or rhn_password|trim == ''))
           and is_registered.rc != 0
 
-  - name: rhn | register to rhn
+  - name: Register to RHN
     command: "/usr/bin/subscription-manager register --username={{ rhn_username }} --password={{ rhn_password }}"
     when: is_registered.rc != 0
 
-  - name: rhn | Auto-attach to RHN Pool
+  - name: Auto-attach to RHN Pool
     command: "/usr/bin/subscription-manager attach --auto"
     when: is_registered.rc != 0
 
-  - name: rhn | Attach to a specified pool
+  - name: Attach to a specific pool
     command: "/usr/bin/subscription-manager attach --pool={{ rhn_pool }}"
     when: not (rhn_pool is undefined or rhn_pool is none or rhn_pool|trim == '')
           and is_registered.rc != 0
 
-  - name: rhn | configure red hat repos
+  - name: Configure repositories
     command: "/usr/bin/subscription-manager repos --disable * --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms"
     when: is_registered.rc != 0

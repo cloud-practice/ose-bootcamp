@@ -1,5 +1,5 @@
 ---
-  - name: create export directory
+  - name: Creating export directory
     file:
       path: /opt/nfs/registry
       state: directory
@@ -8,7 +8,7 @@
       group: nfsnobody
       mode: 0755
 
-  - name: adding export to nfs
+  - name: Adding export to NFS
     lineinfile:
       dest: /etc/exports
       state: present

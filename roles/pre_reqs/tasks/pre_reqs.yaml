@@ -1,10 +1,10 @@
 ---
-  - name: Install base packages.
+  - name: Install base packages
     become: yes
     yum:
       name: "{{ items }}"
       state: latest
-    when:  variable is defined
+    when: variable is defined
     with_items:
       - wget
       - git
@@ -15,6 +15,8 @@
       - bash-completion
       - screen
 
-  - name: Update all packages.
+  - name: Update all packages (this can take a very log time)
     become: yes
-    yum: name=*  state=latest
+    yum: 
+      name: "*"
+      state: latest

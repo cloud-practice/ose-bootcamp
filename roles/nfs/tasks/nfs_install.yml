@@ -1,5 +1,5 @@
 ---
-  - name: install nfs and rpcbind
+  - name: Install NFS and rpcbind
     yum:
       name: "{{ item }}"
       state: present
@@ -10,7 +10,7 @@
       - enable rpcbind
       - enable nfs-server
 
-  - name: open nfs port on firewalld
+  - name: Open NFS ports on firewalld
     firewalld:
       permanent: "{{ item.permanent }}"
       service: "{{ item.service | default(omit) }}"
