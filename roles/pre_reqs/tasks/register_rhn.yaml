@@ -4,37 +4,25 @@
     ignore_errors: yes
     changed_when: no
     register: is_registered
-    tags:
-      - rhn
 
   - fail: msg="ERROR - Cannot register without 'rhn_username' and 'rhn_password' variables set"
     when: ((rhn_username is undefined or rhn_username is none or rhn_username|trim == '')
           or (rhn_password is undefined or rhn_password is none or rhn_password|trim == ''))
           and is_registered.rc != 0
-    tags:
-      - rhn
 
   - name: rhn | register to rhn
     command: "/usr/bin/subscription-manager register --username={{ rhn_username }} --password={{ rhn_password }}"
     when: is_registered.rc != 0
-    tags:
-      - rhn
 
   - name: rhn | Auto-attach to RHN Pool
     command: "/usr/bin/subscription-manager attach --auto"
     when: is_registered.rc != 0
-    tags:
-      - rhn
 
   - name: rhn | Attach to a specified pool
     command: "/usr/bin/subscription-manager attach --pool={{ rhn_pool }}"
     when: not (rhn_pool is undefined or rhn_pool is none or rhn_pool|trim == '')
           and is_registered.rc != 0
-    tags:
-      - rhn
 
   - name: rhn | configure red hat repos
     command: "/usr/bin/subscription-manager repos --disable * --enable rhel-7-server-rpms --enable rhel-7-server-ose-3.1-rpms --enable rhel-7-server-extras-rpms"
     when: is_registered.rc != 0
-    tags:
-      - rhn

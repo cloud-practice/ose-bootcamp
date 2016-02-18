@@ -9,8 +9,6 @@
     notify: 
       - enable rpcbind
       - enable nfs-server
-    tags:
-      - nfs
 
   - name: open nfs port on firewalld
     firewalld:
@@ -21,5 +19,3 @@
       port: "{{ item.port | default(omit) }}"
     with_items: firewalld_rules
     notify: reload firewalld
-    tags:
-      - nfs

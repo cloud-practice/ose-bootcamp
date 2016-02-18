@@ -5,8 +5,6 @@
       name: docker
       state: present
     notify: enable docker
-    tags:
-      - docker
 
   - name: Configure docker
     lineinfile:
@@ -14,27 +12,19 @@
       line: "^OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16'"
       dest: /etc/sysconfig/docker
     notify: restart docker
-    tags:
-      - docker
 
   - name: Check for docker-storage-setup
     shell: 'lvs | grep docker'
     register: is_docker_storage_setup
     changed_when: no
     ignore_errors: yes
-    tags:
-      - docker
 
   - name: Configure docker-storage-setup
     copy:
       src: docker-storage-setup
       dest: /etc/sysconfig/docker-storage-setup
     when: is_docker_storage_setup.rc != 0
-    tags:
-      - docker
 
   - name: Run docker-storage-setup
     command: 'docker-storage-setup'
     when: is_docker_storage_setup.rc != 0
-    tags:
-      - docker

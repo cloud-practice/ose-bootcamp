@@ -3,23 +3,23 @@
   hosts: all
   remote_user: root
   roles:
-    - pre_reqs
+    - { role: pre_reqs, tags: 'pre_reqs' }
 
 - name: DNS
   hosts: oselab
   remote_user: root
   roles:
-    - dns
+    - { role: dns, tags: 'dns' }
 
 - name: NFS
   hosts: nfs
   remote_user: root
   roles:
-    - nfs
+    - { role: nfs, tags: 'nfs' }
 
 - name: docker
   hosts: ose
   remote_user: root
   roles:
-    - docker
+    - { role: docker, tags: 'docker' }
 
