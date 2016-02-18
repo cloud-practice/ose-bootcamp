@@ -1,4 +1,5 @@
 ---
 # vars file for ose-bootcamp
-rhn_username: ""
-rhn_password: ""
+rhn_username: ''
+rhn_password: ''
+rhn_pool: ''
