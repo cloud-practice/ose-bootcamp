@@ -59,3 +59,16 @@ The default tasks executed on hosts at a time is *5*, so it is recommended to se
 ```bash
 ansible-playbook --forks=10 setup_environment.yaml --extra-vars="rhn_username=my.user rhn_password=my.password"
 ```
+To use a specific RHN pool, define the *rhn_pool* variable in *rols/pre_reqs/vars/main.yml* or on the command line
+```bash
+ansible-playbook --forks=10 setup_environment.yaml --extra-vars="rhn_username=my.user rhn_password=my.password rhn_pool=XXXXX"
+```
+
+# Tags
+
+Tags can be used to run specific roles by appending *--tags* to the *ansible-playbook* command. e.g.:
+```bash
+ansible-playbook setup_environment.yaml --tags "rhn"
+```
+
+This is helpful for example to make sure all systems register and update before running the remaining roles.

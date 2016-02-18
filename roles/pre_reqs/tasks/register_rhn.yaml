@@ -20,9 +20,16 @@
     tags:
       - rhn
 
-  - name: rhn | Auto-attach to RHN Pool.
+  - name: rhn | Auto-attach to RHN Pool
     command: "/usr/bin/subscription-manager attach --auto"
     when: is_registered.rc != 0
+    tags:
+      - rhn
+
+  - name: rhn | Attach to a specified pool
+    command: "/usr/bin/subscription-manager attach --pool={{ rhn_pool }}"
+    when: not (rhn_pool is undefined or rhn_pool is none or rhn_pool|trim == '')
+          and is_registered.rc != 0
     tags:
       - rhn
 

@@ -1,5 +1,8 @@
 ---
 # vars file for ose-bootcamp
+# RHN username and password
 rhn_username: ''
 rhn_password: ''
+
+#Optional RHN pool, determine this by running 'subscription-manager list --available'
 rhn_pool: ''
